@@ -87,14 +87,15 @@ h1, h2, h3 { color: #182a3a !important; }
 .placeholder-slate-400::placeholder { color: #97a3a7 !important; }
 
 .game-hud {
+  align-items: stretch;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
   gap: 12px;
-  padding: 16px;
+  grid-template-columns: minmax(0, 1fr) 142px;
+  padding: 16px 16px 10px;
 }
 .score-panel {
   min-width: 0;
-  padding: 12px 16px 13px;
+  padding: 12px 14px 13px;
   border-radius: 16px;
 }
 .round-label {
@@ -108,21 +109,24 @@ h1, h2, h3 { color: #182a3a !important; }
 }
 .round-label span { color: #9baaa9; }
 .score-values {
-  align-items: end;
-  display: flex;
-  gap: 12px;
+  align-items: stretch;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
   margin-top: 7px;
 }
-.score-values div { align-items: baseline; display: flex; gap: 6px; min-width: 0; }
-.score-values span { color: #809096; font-size: 10px; font-weight: 600; text-transform: uppercase; }
-.score-values strong { color: #263b48; font-family: 'DM Sans', sans-serif; font-size: 23px; line-height: 1; }
-.score-values i { color: #b0bdb9; font-size: 18px; font-style: normal; line-height: 1; }
+.score-values div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.score-values div:nth-of-type(2) { text-align: right; }
+.score-values span { color: #809096; font-size: 9px; font-weight: 700; letter-spacing: .08em; line-height: 1; text-transform: uppercase; }
+.score-values strong { color: #263b48; font-family: 'DM Sans', sans-serif; font-size: 24px; line-height: 1; }
+.score-values i { background: #dbe6e1; display: block; font-size: 0; width: 1px; }
 .timer-panel {
   align-items: center;
   display: flex;
   gap: 8px;
-  min-width: 112px;
-  padding: 8px 12px 8px 8px;
+  justify-content: center;
+  min-width: 0;
+  padding: 8px 10px;
   border-radius: 16px;
 }
 .timer-ring { height: 48px; position: relative; width: 48px; }
@@ -131,7 +135,7 @@ h1, h2, h3 { color: #182a3a !important; }
 .timer-track { stroke: #dce8e3; }
 .timer-progress { stroke: #477f76; stroke-linecap: round; }
 .timer-ring strong { color: #263b48; font-size: 16px; left: 0; line-height: 48px; position: absolute; text-align: center; top: 0; width: 48px; }
-.timer-copy { display: flex; flex-direction: column; line-height: 1.15; }
+.timer-copy { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
 .timer-copy span { color: #477f76; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .timer-copy strong { color: #8c9a9a; font-size: 10px; font-weight: 600; margin-top: 3px; }
 .timer-panel--urgent .timer-progress { stroke: #b76579; }
@@ -224,8 +228,14 @@ h1, h2, h3 { color: #182a3a !important; }
   .app-container > div:nth-child(2) > div:first-child { padding: 24px 20px; }
   .state-screen { padding: 24px; }
   .game-hud { padding: 12px; }
+  .game-hud { grid-template-columns: minmax(0, 1fr) 132px; }
   .score-values { gap: 8px; }
-  .score-values span { font-size: 9px; }
   .score-values strong { font-size: 21px; }
-  .timer-panel { min-width: 104px; }
+  .timer-panel { gap: 6px; padding-inline: 7px; }
+  .timer-copy span { font-size: 9px; }
+}
+
+@media (max-width: 360px) {
+  .game-hud { grid-template-columns: 1fr; }
+  .timer-panel { justify-content: flex-start; min-height: 64px; }
 }
