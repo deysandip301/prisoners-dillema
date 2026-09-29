@@ -155,13 +155,13 @@ h1, h2, h3 { color: #182a3a !important; }
 .app-container > div:nth-child(2) > button.absolute.inset-0 { border: 0; padding: 0; }
 
 /* Menu: editorial header and compact control board. */
-.app-container > div:nth-child(2) > div:first-child { padding: 30px 28px 26px; justify-content: flex-start; }
-.app-container > div:nth-child(2) > div:first-child > div:first-child {
+.menu-screen { padding: 30px 28px 26px; justify-content: flex-start; }
+.menu-screen > div:first-child {
   margin-bottom: 28px;
   text-align: left;
   position: relative;
 }
-.app-container > div:nth-child(2) > div:first-child > div:first-child::before {
+.menu-screen > div:first-child::before {
   content: 'PRIVATE TABLE / 01';
   display: block;
   color: #719087;
@@ -170,7 +170,7 @@ h1, h2, h3 { color: #182a3a !important; }
   letter-spacing: .18em;
   margin-bottom: 28px;
 }
-.app-container > div:nth-child(2) > div:first-child > div:first-child > div {
+.menu-screen > div:first-child > div {
   width: 54px !important;
   height: 54px !important;
   margin: 0 0 18px !important;
@@ -178,38 +178,38 @@ h1, h2, h3 { color: #182a3a !important; }
   background: #2c7770 !important;
   box-shadow: 7px 7px 0 #c9ddd5 !important;
 }
-.app-container > div:nth-child(2) > div:first-child > div:first-child > div svg { width: 26px; height: 26px; }
-.app-container > div:nth-child(2) > div:first-child h1 {
+.menu-screen > div:first-child > div svg { width: 26px; height: 26px; }
+.menu-screen h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(44px, 11vw, 62px) !important;
   font-weight: 600;
   line-height: .9;
   letter-spacing: -.07em !important;
 }
-.app-container > div:nth-child(2) > div:first-child > div:first-child p {
+.menu-screen > div:first-child p {
   color: #76858a !important;
   font-size: 11px;
   letter-spacing: .16em;
   margin-top: 14px;
 }
-.app-container > div:nth-child(2) > div:first-child > div:nth-child(2) { gap: 12px; }
-.app-container > div:nth-child(2) > div:first-child > div:nth-child(2) > div:first-child {
+.menu-screen > div:nth-child(2) { gap: 12px; }
+.menu-screen > div:nth-child(2) > div:first-child {
   padding: 8px 16px 8px 8px;
   border-radius: 14px !important;
 }
-.app-container > div:nth-child(2) > div:first-child > div:nth-child(2) > div:first-child > div {
+.menu-screen > div:nth-child(2) > div:first-child > div {
   width: 38px; height: 38px; background: #e4f0eb !important;
 }
-.app-container > div:nth-child(2) > div:first-child > div:nth-child(2) > div:nth-child(2) { padding: 20px; border-radius: 18px !important; gap: 18px; }
-.app-container > div:nth-child(2) > div:first-child input[type='range'] { height: 4px; accent-color: #477f76; }
-.app-container > div:nth-child(2) > div:first-child button { border-radius: 12px !important; }
-.app-container > div:nth-child(2) > div:first-child > div:nth-child(2) > div:nth-child(2) button {
+.menu-screen > div:nth-child(2) > div:nth-child(2) { padding: 20px; border-radius: 18px !important; gap: 18px; }
+.menu-screen input[type='range'] { height: 4px; accent-color: #477f76; }
+.menu-screen button { border-radius: 12px !important; }
+.menu-screen > div:nth-child(2) > div:nth-child(2) button {
   margin-top: 4px;
   background: #263b48 !important;
   box-shadow: 0 9px 0 #d2dfda !important;
   letter-spacing: .01em;
 }
-.app-container > div:nth-child(2) > div:first-child > div:nth-child(2) > div:nth-child(3) { padding: 7px; border-radius: 14px !important; }
+.menu-screen > div:nth-child(2) > div:nth-child(3) { padding: 7px; border-radius: 14px !important; }
 
 /* Play controls have contrasting identities instead of generic gradient tiles. */
 .app-container button[class*='rounded-[32px]'] { border-radius: 18px !important; min-height: 174px; }
@@ -234,7 +234,7 @@ h1, h2, h3 { color: #182a3a !important; }
 .primary-action { align-items: center; background: #263b48; border: 0; border-radius: 12px; color: #fff; display: flex; font-weight: 700; gap: 10px; justify-content: center; padding: 16px 20px; }
 
 @media (max-width: 520px) {
-  .app-container > div:nth-child(2) > div:first-child { padding: 24px 20px; }
+  .menu-screen { padding: 24px 20px; }
   .state-screen { padding: 24px; }
   .game-hud { padding: 12px; }
   .score-values { gap: 8px; }
@@ -246,4 +246,26 @@ h1, h2, h3 { color: #182a3a !important; }
 @media (max-width: 420px) {
   .game-hud { flex-direction: column; }
   .timer-panel { flex-basis: auto; justify-content: flex-start; min-height: 64px; min-width: 0; width: 100%; }
+}
+
+/* The menu's legacy positional rules must never style the in-game HUD. */
+.app-container > div:nth-child(2) .game-hud .score-panel,
+.app-container > div:nth-child(2) .game-hud .timer-panel {
+  background: #ffffff !important;
+  border: 1px solid #d9e2de !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 20px rgba(35, 65, 76, .08) !important;
+  height: auto !important;
+  margin: 0 !important;
+  width: auto !important;
+}
+.app-container > div:nth-child(2) .game-hud .score-panel { flex: 1 1 0 !important; min-width: 180px !important; }
+.app-container > div:nth-child(2) .game-hud .timer-panel { flex: 0 0 142px !important; min-width: 142px !important; }
+
+@media (max-width: 520px) {
+  .app-container > div:nth-child(2) .game-hud .timer-panel { flex-basis: 132px !important; min-width: 132px !important; }
+}
+
+@media (max-width: 360px) {
+  .app-container > div:nth-child(2) .game-hud .timer-panel { flex: 0 0 auto !important; min-width: 0 !important; width: 100% !important; }
 }

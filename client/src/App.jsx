@@ -160,7 +160,7 @@ export default function App() {
           {/* MENU SCREEN */}
           {gameState === 'menu' && (
             <motion.div key="menu" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
-              className="flex-1 flex flex-col p-6 justify-center">
+              className="menu-screen flex-1 flex flex-col p-6 justify-center">
               
               <div className="mb-10 text-center">
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={springConfig} className="w-20 h-20 bg-gradient-to-tr from-sky-400 to-blue-600 rounded-3xl mx-auto shadow-[0_10px_30px_rgba(14,165,233,0.3)] flex items-center justify-center mb-6">
