@@ -51,6 +51,7 @@ button { cursor: pointer; }
   box-shadow: 0 0 0 1px rgba(255,255,255,.3), 0 24px 80px rgba(45, 68, 75, .12);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
+  isolation: isolate;
 }
 .app-container > div:nth-child(2)::-webkit-scrollbar { display: none; }
 
@@ -137,6 +138,8 @@ h1, h2, h3 { color: #182a3a !important; }
 .timer-panel--urgent .timer-ring strong, .timer-panel--urgent .timer-copy span { color: #b76579; }
 .chat-emoji { background: transparent; border: 0; border-radius: 10px; font-size: 28px; line-height: 1; padding: 5px; }
 .chat-emoji:focus-visible { outline: 2px solid #477f76; outline-offset: 2px; }
+.chat-sheet { max-height: min(76dvh, 620px); min-height: 360px; overflow: hidden; }
+.app-container > div:nth-child(2) > button.absolute.inset-0 { border: 0; padding: 0; }
 
 /* Menu: editorial header and compact control board. */
 .app-container > div:nth-child(2) > div:first-child { padding: 30px 28px 26px; justify-content: flex-start; }

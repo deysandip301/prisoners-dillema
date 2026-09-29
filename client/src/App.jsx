@@ -96,6 +96,15 @@ export default function App() {
 
   useEffect(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), [messages, showChat]);
 
+  useEffect(() => {
+    if (!showChat) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setShowChat(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [showChat]);
+
   const joinRoom = () => {
     if (!inputCode || !playerName) { triggerHaptic('error'); return alert("Enter name and code."); }
     triggerHaptic('medium');
@@ -115,6 +124,11 @@ export default function App() {
     if (!roomCode) return;
     triggerHaptic('light');
     socket.emit('send_message', { roomCode, message, type: 'emote' });
+  };
+
+  const closeChat = () => {
+    setShowChat(false);
+    triggerHaptic('light');
   };
 
   return (
@@ -305,14 +319,15 @@ export default function App() {
         <AnimatePresence>
           {showChat && (
             <>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => { setShowChat(false); triggerHaptic('light'); }}
+              <motion.button type="button" aria-label="Close chat" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={closeChat}
                 className="absolute inset-0 bg-slate-900/10 backdrop-blur-sm z-40" />
               <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }} transition={springConfig}
-                className="absolute bottom-0 left-0 right-0 h-3/4 bg-white/90 backdrop-blur-3xl rounded-t-[40px] shadow-[0_-10px_40px_rgba(14,165,233,0.1)] border-t border-white z-50 flex flex-col">
+                role="dialog" aria-modal="true" aria-label="Tactical Comms"
+                className="chat-sheet absolute bottom-0 left-0 right-0 h-3/4 bg-white/90 backdrop-blur-3xl rounded-t-[40px] shadow-[0_-10px_40px_rgba(14,165,233,0.1)] border-t border-white z-50 flex flex-col">
                 
                 <div className="p-4 flex justify-between items-center border-b border-sky-100">
                   <h3 className="font-bold text-slate-800 ml-4">Tactical Comms</h3>
-                  <button onClick={() => { setShowChat(false); triggerHaptic('light'); }} className="w-10 h-10 bg-sky-50 rounded-full flex items-center justify-center text-sky-600">
+                  <button type="button" onClick={closeChat} aria-label="Close chat" className="w-10 h-10 bg-sky-50 rounded-full flex items-center justify-center text-sky-600">
                     <X className="w-5 h-5" />
                   </button>
                 </div>

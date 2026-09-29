@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: prisoners-dilemma-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
