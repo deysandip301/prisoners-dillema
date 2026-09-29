@@ -120,7 +120,9 @@ export default function App() {
     setInputMsg('');
   };
 
-  const sendEmote = (message) => {
+  const sendEmote = (event, message) => {
+    event.preventDefault();
+    event.stopPropagation();
     if (!roomCode) return;
     triggerHaptic('light');
     socket.emit('send_message', { roomCode, message, type: 'emote' });
@@ -346,7 +348,7 @@ export default function App() {
                 <div className="p-4 bg-white/50 backdrop-blur-md border-t border-sky-50">
                   <div className="flex justify-around mb-4">
                     {EMOJIS.map((e) => (
-                      <button type="button" key={e} onClick={() => sendEmote(e)} aria-label={`Send ${e}`} className="chat-emoji hover:scale-110 active:scale-95 transition-transform">{e}</button>
+                      <button type="button" key={e} onClick={(event) => sendEmote(event, e)} aria-label={`Send ${e}`} className="chat-emoji hover:scale-110 active:scale-95 transition-transform">{e}</button>
                     ))}
                   </div>
                   <form onSubmit={sendMessage} className="flex gap-2 bg-sky-50 p-2 rounded-[24px]">
