@@ -231,6 +231,13 @@ h1, h2, h3 { color: #182a3a !important; }
 .final-score { align-items: center; display: flex; gap: 18px; margin: 14px 0 38px; }
 .final-score strong { color: #263b48; font-size: 64px; letter-spacing: -.08em; }
 .final-score span { color: #477f76; font-family: 'Playfair Display', serif; font-size: 38px; }
+.final-scoreboard { display: grid; gap: 10px; margin: 8px 0 24px; }
+.final-player { align-items: center; background: #fff; border: 1px solid #d9e2de; border-radius: 14px; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 14px; padding: 14px 16px; }
+.final-player > span { color: #263b48; font-size: 14px; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.final-player > strong { color: #52616a; font-size: 26px; line-height: 1; }
+.final-player > em { color: #2c7770; font-size: 10px; font-style: normal; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.final-player--winner { background: #edf7f2; border-color: #8fc5b2; box-shadow: 0 8px 22px rgba(44, 119, 112, .12); }
+.final-player--winner > strong { color: #1d685f; }
 .primary-action { align-items: center; background: #263b48; border: 0; border-radius: 12px; color: #fff; display: flex; font-weight: 700; gap: 10px; justify-content: center; padding: 16px 20px; }
 
 @media (max-width: 520px) {

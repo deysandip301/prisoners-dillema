@@ -160,7 +160,18 @@ function resolveRound(roomCode) {
 
   if (room.currentRound >= room.maxRounds) {
     room.status = 'finished';
-    io.to(roomCode).emit('game_over', room.scores);
+    const finalPlayers = room.players.map((playerId) => ({
+      id: playerId,
+      name: room.playerNames[playerId],
+      score: room.scores[playerId],
+    }));
+    const highestScore = Math.max(...finalPlayers.map((player) => player.score));
+    const winners = finalPlayers.filter((player) => player.score === highestScore);
+    io.to(roomCode).emit('game_over', {
+      players: finalPlayers,
+      winnerIds: winners.map((player) => player.id),
+      isTie: winners.length > 1,
+    });
   } else {
     room.currentRound++;
     room.choices = {};

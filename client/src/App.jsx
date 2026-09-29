@@ -39,6 +39,7 @@ export default function App() {
   const [opponentLocked, setOpponentLocked] = useState(false);
   const [roundData, setRoundData] = useState(null);
   const [scores, setScores] = useState({ me: 0, opponent: 0 });
+  const [finalResult, setFinalResult] = useState(null);
   const [copied, setCopied] = useState(false);
   
   const [showChat, setShowChat] = useState(false);
@@ -69,7 +70,11 @@ export default function App() {
     socket.on('next_round', (round) => { 
       setCurrentRound(round); setTimeLeft(turnTime); setGameState('playing'); triggerHaptic('medium');
     });
-    socket.on('game_over', () => { setGameState('game_over'); triggerHaptic('success'); });
+    socket.on('game_over', (result) => {
+      setFinalResult(result);
+      setGameState('game_over');
+      triggerHaptic('success');
+    });
     socket.on('player_paused', () => { setGameState('paused'); triggerHaptic('error'); });
     socket.on('receive_message', (msg) => {
       setMessages((prev) => [...prev, msg]); 
@@ -311,8 +316,19 @@ export default function App() {
           {gameState === 'game_over' && (
             <motion.div key="game-over" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="state-screen">
               <span className="eyebrow">Final score</span>
-              <h2 className="display-title">A memorable<br /><em>confession.</em></h2>
-              <div className="final-score"><strong>{scores.me}</strong><span>—</span><strong>{scores.opponent}</strong></div>
+              <h2 className="display-title">{finalResult?.isTie ? <>A perfectly<br /><em>even table.</em></> : <>We have a<br /><em>winner.</em></>}</h2>
+              {finalResult && (
+                <div className="final-scoreboard">
+                  {finalResult.players.map((player) => (
+                    <div key={player.id} className={`final-player ${finalResult.winnerIds.includes(player.id) ? 'final-player--winner' : ''}`}>
+                      <span>{player.name}</span>
+                      <strong>{player.score}</strong>
+                      {!finalResult.isTie && finalResult.winnerIds.includes(player.id) && <em>Winner</em>}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p className="state-note">{finalResult?.isTie ? 'Both players leave the table level.' : 'A decisive finish to the match.'}</p>
               <button type="button" onClick={() => window.location.reload()} className="primary-action">Return to lobby <ChevronRight size={18} /></button>
             </motion.div>
           )}
