@@ -111,6 +111,12 @@ export default function App() {
     setInputMsg('');
   };
 
+  const sendEmote = (message) => {
+    if (!roomCode) return;
+    triggerHaptic('light');
+    socket.emit('send_message', { roomCode, message, type: 'emote' });
+  };
+
   return (
     <div className="app-container flex justify-center">
       
@@ -201,19 +207,25 @@ export default function App() {
           {gameState === 'playing' && (
             <motion.div key="playing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col h-full">
               
-              <div className="p-4 flex justify-between items-start z-10">
-                <div className="glass-pill px-5 py-3 rounded-full flex flex-col">
-                  <span className="text-[10px] font-black text-sky-600/70 uppercase tracking-widest">Round {currentRound}/{maxRounds}</span>
-                  <span className="font-mono font-black text-slate-800 text-lg">{scores.me} - {scores.opponent}</span>
+              <div className="game-hud z-10">
+                <div className="score-panel glass-pill">
+                  <div className="round-label">Round {currentRound} <span>/ {maxRounds}</span></div>
+                  <div className="score-values">
+                    <div><span>You</span><strong>{scores.me}</strong></div>
+                    <i>-</i>
+                    <div><span>Opponent</span><strong>{scores.opponent}</strong></div>
+                  </div>
                 </div>
-                
-                <div className="glass-pill w-16 h-16 rounded-full flex items-center justify-center relative shadow-lg">
-                  <svg className="absolute inset-0 w-full h-full -rotate-90">
-                    <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="4" />
-                    <motion.circle cx="32" cy="32" r="28" fill="none" stroke={timeLeft <= 5 ? "#ef4444" : "#0ea5e9"} strokeWidth="4" strokeDasharray="175"
-                      initial={{ strokeDashoffset: 0 }} animate={{ strokeDashoffset: 175 - (175 * (timeLeft / turnTime)) }} transition={{ duration: 1, ease: "linear" }} strokeLinecap="round" />
-                  </svg>
-                  <span className="font-black text-xl text-slate-800 absolute">{timeLeft}</span>
+                <div className={`timer-panel glass-pill ${timeLeft <= 5 ? 'timer-panel--urgent' : ''}`} aria-label={`${timeLeft} seconds remaining`}>
+                  <div className="timer-ring">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <circle cx="32" cy="32" r="27" className="timer-track" />
+                      <motion.circle cx="32" cy="32" r="27" className="timer-progress" strokeDasharray="169.6"
+                        initial={{ strokeDashoffset: 0 }} animate={{ strokeDashoffset: 169.6 - (169.6 * (timeLeft / turnTime)) }} transition={{ duration: 1, ease: 'linear' }} />
+                    </svg>
+                    <strong>{timeLeft}</strong>
+                  </div>
+                  <div className="timer-copy"><span>Decision</span><strong>seconds</strong></div>
                 </div>
               </div>
 
@@ -319,7 +331,7 @@ export default function App() {
                 <div className="p-4 bg-white/50 backdrop-blur-md border-t border-sky-50">
                   <div className="flex justify-around mb-4">
                     {EMOJIS.map((e) => (
-                      <button key={e} onClick={() => { triggerHaptic('light'); socket.emit('send_message', { roomCode, message: e, type: 'emote' }); }} className="text-3xl hover:scale-110 active:scale-95 transition-transform">{e}</button>
+                      <button type="button" key={e} onClick={() => sendEmote(e)} aria-label={`Send ${e}`} className="chat-emoji hover:scale-110 active:scale-95 transition-transform">{e}</button>
                     ))}
                   </div>
                   <form onSubmit={sendMessage} className="flex gap-2 bg-sky-50 p-2 rounded-[24px]">
