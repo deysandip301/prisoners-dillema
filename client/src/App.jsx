@@ -11,7 +11,7 @@ const springConfig = { type: "spring", stiffness: 300, damping: 25 };
 // --- HAPTICS ENGINE ---
 // Triggers physical vibrations on mobile devices (Android & supported iOS)
 const triggerHaptic = (type = 'light') => {
-  if (!window.navigator || !window.navigator.vibrate) return;
+  if (!window.navigator || typeof window.navigator.vibrate !== 'function') return;
   try {
     switch(type) {
       case 'light': navigator.vibrate(15); break; // Small tap (typing, opening chat)
@@ -94,7 +94,11 @@ export default function App() {
     return () => clearInterval(timer);
   }, [gameState, timeLeft, hasLocked, makeChoice]);
 
-  useEffect(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), [messages, showChat]);
+  useEffect(() => {
+    const chatBottom = chatBottomRef.current;
+    if (!chatBottom || typeof chatBottom.scrollIntoView !== 'function') return;
+    chatBottom.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, [messages, showChat]);
 
   useEffect(() => {
     if (!showChat) return undefined;
