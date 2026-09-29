@@ -32,6 +32,7 @@ export default function App() {
   const [maxRounds, setMaxRounds] = useState(5);
   const [turnTime, setTurnTime] = useState(30);
   const [currentRound, setCurrentRound] = useState(1);
+  const [playerNames, setPlayerNames] = useState({ me: 'You', opponent: 'Opponent' });
   
   const [timeLeft, setTimeLeft] = useState(30);
   const [hasLocked, setHasLocked] = useState(false);
@@ -49,7 +50,12 @@ export default function App() {
     socket.on('room_created', (code) => { 
       setRoomCode(code); setGameState('lobby'); triggerHaptic('success'); 
     });
-    socket.on('game_start', ({ maxRounds, turnTime }) => {
+    socket.on('game_start', ({ maxRounds, turnTime, players }) => {
+      const otherPlayerId = Object.keys(players).find((id) => id !== socket.id);
+      setPlayerNames({
+        me: players[socket.id] || 'You',
+        opponent: players[otherPlayerId] || 'Opponent',
+      });
       setMaxRounds(maxRounds); setTurnTime(turnTime); setTimeLeft(turnTime); setGameState('playing'); triggerHaptic('heavy');
     });
     socket.on('opponent_locked', () => {
@@ -183,7 +189,7 @@ export default function App() {
                     <input type="range" min="10" max="60" step="5" value={turnTime} onChange={(e) => { setTurnTime(e.target.value); triggerHaptic('light'); }} className="w-full accent-sky-500" />
                   </div>
                   
-                  <motion.button whileTap={{ scale: 0.95 }} onClick={() => { if(!playerName) { triggerHaptic('error'); return alert("Name required"); } triggerHaptic('medium'); socket.emit('create_room', { maxRounds, turnTime }); }}
+                  <motion.button whileTap={{ scale: 0.95 }} onClick={() => { if(!playerName) { triggerHaptic('error'); return alert("Name required"); } triggerHaptic('medium'); socket.emit('create_room', { maxRounds, turnTime, playerName }); }}
                     className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-[0_10px_30px_rgba(14,165,233,0.3)] flex items-center justify-center gap-2 transition-all">
                     Host Game <ChevronRight className="w-5 h-5" />
                   </motion.button>
@@ -231,9 +237,9 @@ export default function App() {
                 <div className="score-panel glass-pill">
                   <div className="round-label">Round {currentRound} <span>/ {maxRounds}</span></div>
                   <div className="score-values">
-                    <div><span>You</span><strong>{scores.me}</strong></div>
+                    <div><span title={playerNames.me}>{playerNames.me}</span><strong>{scores.me}</strong></div>
                     <i>-</i>
-                    <div><span>Opponent</span><strong>{scores.opponent}</strong></div>
+                    <div><span title={playerNames.opponent}>{playerNames.opponent}</span><strong>{scores.opponent}</strong></div>
                   </div>
                 </div>
                 <div className={`timer-panel glass-pill ${timeLeft <= 5 ? 'timer-panel--urgent' : ''}`} aria-label={`${timeLeft} seconds remaining`}>

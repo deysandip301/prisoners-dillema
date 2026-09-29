@@ -119,8 +119,8 @@ h1, h2, h3 { color: #182a3a !important; }
 }
 .score-values div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .score-values div:nth-of-type(2) { text-align: right; }
-.score-values span { color: #809096; font-size: 9px; font-weight: 700; letter-spacing: .08em; line-height: 1; text-transform: uppercase; }
-.score-values strong { color: #263b48; font-family: 'DM Sans', sans-serif; font-size: 24px; line-height: 1; }
+.score-values span { color: #477f76; display: block; font-size: 10px; font-weight: 800; letter-spacing: .06em; line-height: 1.15; max-width: 100%; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.score-values strong { color: #182a3a; font-family: 'DM Sans', sans-serif; font-size: 28px; font-weight: 800; line-height: 1; }
 .score-values i { background: #dbe6e1; display: block; font-size: 0; width: 1px; }
 .timer-panel {
   align-items: center;
@@ -137,10 +137,10 @@ h1, h2, h3 { color: #182a3a !important; }
 .timer-ring circle { fill: none; stroke-width: 4; }
 .timer-track { stroke: #dce8e3; }
 .timer-progress { stroke: #477f76; stroke-linecap: round; }
-.timer-ring strong { color: #263b48; font-size: 16px; left: 0; line-height: 48px; position: absolute; text-align: center; top: 0; width: 48px; }
+.timer-ring strong { color: #182a3a; font-size: 17px; font-weight: 800; left: 0; line-height: 48px; position: absolute; text-align: center; top: 0; width: 48px; }
 .timer-copy { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
-.timer-copy span { color: #477f76; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.timer-copy strong { color: #8c9a9a; font-size: 10px; font-weight: 600; margin-top: 3px; }
+.timer-copy span { color: #2c7770; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.timer-copy strong { color: #526b70; font-size: 10px; font-weight: 700; margin-top: 3px; }
 .timer-panel--urgent .timer-progress { stroke: #b76579; }
 .timer-panel--urgent .timer-ring strong, .timer-panel--urgent .timer-copy span { color: #b76579; }
 .chat-emoji { background: transparent; border: 0; border-radius: 10px; font-size: 28px; line-height: 1; padding: 5px; }

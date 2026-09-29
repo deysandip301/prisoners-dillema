@@ -25,14 +25,14 @@ io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
   // Create Room with custom options set by owner
-  socket.on('create_room', ({ maxRounds, turnTime }) => {
+  socket.on('create_room', ({ maxRounds, turnTime, playerName }) => {
     const roomCode = generateRoomCode();
     const requestedRounds = Number(maxRounds);
     const roundLimit = Number.isFinite(requestedRounds) ? Math.min(50, Math.max(1, requestedRounds)) : 5;
     rooms[roomCode] = {
       owner: socket.id,
       players: [socket.id],
-      playerNames: { [socket.id]: "Player 1" },
+      playerNames: { [socket.id]: playerName || "Player 1" },
       scores: { [socket.id]: 0 },
       choices: {},
       currentRound: 1,
