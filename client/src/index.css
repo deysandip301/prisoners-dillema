@@ -95,12 +95,13 @@ h1, h2, h3 { color: #182a3a !important; }
 }
 .game-hud > * { box-sizing: border-box; }
 .score-panel {
-  background: #f8fbfa !important;
-  border: 1px solid #cbded7 !important;
+  background: #ffffff !important;
+  border: 1px solid #d9e2de !important;
   flex: 1 1 0;
   min-width: 180px;
   padding: 12px 14px 13px;
   border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(35, 65, 76, .08);
 }
 .round-label {
   color: #23414c !important;
@@ -126,8 +127,8 @@ h1, h2, h3 { color: #182a3a !important; }
 .score-values i { background: #dbe6e1; display: block; font-size: 0; width: 1px; }
 .timer-panel {
   align-items: center;
-  background: #f8fbfa !important;
-  border: 1px solid #cbded7 !important;
+  background: #ffffff !important;
+  border: 1px solid #d9e2de !important;
   display: flex;
   flex: 0 0 142px;
   gap: 8px;
@@ -135,6 +136,7 @@ h1, h2, h3 { color: #182a3a !important; }
   min-width: 142px;
   padding: 8px 10px;
   border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(35, 65, 76, .08);
 }
 .timer-ring { height: 48px; position: relative; width: 48px; }
 .timer-ring svg { display: block; height: 48px; transform: rotate(-90deg); width: 48px; }
